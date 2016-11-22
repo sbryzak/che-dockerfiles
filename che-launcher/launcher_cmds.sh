@@ -28,7 +28,10 @@ start_che_server() {
   fi
 
   info "${CHE_PRODUCT_NAME}: Starting container..."
-  docker_run_with_debug "${CHE_SERVER_IMAGE_NAME}":"${CHE_VERSION}" > /dev/null
+  #docker_run_with_debug "${CHE_SERVER_IMAGE_NAME}":"${CHE_VERSION}" > /dev/null
+  #info "Creating lib/wsagent volume..."
+  #docker_create_lib_wsagent_volume
+  docker_run_with_volumes_lib "${CHE_SERVER_IMAGE_NAME}":"${CHE_VERSION}" > /dev/null
 
   CURRENT_CHE_SERVER_CONTAINER_ID=$(get_che_server_container_id ${CHE_SERVER_CONTAINER_NAME})
   wait_until_container_is_running 10 ${CURRENT_CHE_SERVER_CONTAINER_ID}
@@ -147,18 +150,19 @@ print_debug_info() {
   info ""
   info ""
   info "----  CURRENT COMMAND LINE OPTIONS  ---" 
-  info "CHE_VERSION               = ${CHE_VERSION}"
-  info "CHE_DATA                  = ${CHE_DATA}"
-  info "CHE_CONF                  = ${CHE_CONF:-not set}"
-  info "CHE_ASSEMBLY              = ${CHE_ASSEMBLY:-not set}"
-  info "CHE_PORT                  = ${CHE_PORT}"
-  info "CHE_HOST_IP               = ${CHE_HOST_IP}"
-  info "CHE_RESTART_POLICY        = ${CHE_RESTART_POLICY}"
-  info "CHE_USER                  = ${CHE_USER}"
-  info "CHE_LOG_LEVEL             = ${CHE_LOG_LEVEL}"
-  info "CHE_DEBUG_SERVER          = ${CHE_DEBUG_SERVER}"
-  info "CHE_DEBUG_SERVER_PORT     = ${CHE_DEBUG_SERVER_PORT}"
-  info "CHE_HOSTNAME              = ${CHE_HOSTNAME}"
-  info "CHE_SERVER_CONTAINER_NAME = ${CHE_SERVER_CONTAINER_NAME}"
-  info "CHE_SERVER_IMAGE_NAME     = ${CHE_SERVER_IMAGE_NAME}"
+  info "CHE_VERSION                    = ${CHE_VERSION}"
+  info "CHE_DATA                       = ${CHE_DATA}"
+  info "CHE_CONF                       = ${CHE_CONF:-not set}"
+  info "CHE_ASSEMBLY                   = ${CHE_ASSEMBLY:-not set}"
+  info "CHE_PORT                       = ${CHE_PORT}"
+  info "CHE_HOST_IP                    = ${CHE_HOST_IP}"
+  info "CHE_RESTART_POLICY             = ${CHE_RESTART_POLICY}"
+  info "CHE_USER                       = ${CHE_USER}"
+  info "CHE_LOG_LEVEL                  = ${CHE_LOG_LEVEL}"
+  info "CHE_DEBUG_SERVER               = ${CHE_DEBUG_SERVER}"
+  info "CHE_DEBUG_SERVER_PORT          = ${CHE_DEBUG_SERVER_PORT}"
+  info "CHE_HOSTNAME                   = ${CHE_HOSTNAME}"
+  info "CHE_SERVER_CONTAINER_NAME      = ${CHE_SERVER_CONTAINER_NAME}"
+  info "CHE_SERVER_IMAGE_NAME          = ${CHE_SERVER_IMAGE_NAME}"
+  info "CHE_LIB_VOLUME                 = ${CHE_LIB_VOLUME:-not set}"
 }
